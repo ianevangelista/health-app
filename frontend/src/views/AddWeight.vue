@@ -15,9 +15,9 @@
             label="Weight (kg)"
             dense
             outlined
-            @change="isInputValid"
+            @change="valid"
           ></v-select>
-          <v-btn :disabled="disabled" @click="saveWeight">
+          <v-btn :disabled="valid" @click="saveWeight">
             <v-icon left>
               mdi-content-save
             </v-icon>
@@ -30,7 +30,7 @@
             Select a date: 
           </p>
           <div class="text-center">
-            <v-date-picker @change="isInputValid" v-model="picker"/>
+            <v-date-picker @change="valid" v-model="picker"/>
           </div>
         </v-col>
       </v-row>
@@ -50,7 +50,7 @@ import Navbar from "../components/Navbar"
         Navbar
       },
       data: () => ({
-        weights: Array(50).fill().map((element, index) => 50+index),
+        weights: Array(50).fill().map((element, index) =>  (50+index).toFixed(1)),
         picker: new Date().toISOString().substr(0, 10),
         currentWeight: {},
         valid: false
@@ -64,7 +64,8 @@ import Navbar from "../components/Navbar"
         },
       },
       mounted(){
-        this.currentWeight = this.$store.getters.getCurrentWeight;
+        this.currentWeight = this.$store.getters.getAllWeights[this.$store.getters.getAllWeights.length-1];
+        console.log(this.currentWeight.weight);
       }
   }
 </script>

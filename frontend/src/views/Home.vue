@@ -3,27 +3,22 @@
     <v-main>
       <Navbar/>
       <h1>All weights:</h1>
-      <h3 v-for="(weight, index) in weights" :key="index"><span>{{"Your weight the " + weight.date +' was '}}</span>{{weight.weight +' kg'}}</h3>
+      <h3 v-for="(weight, index) in allWeights" :key="index"><span>{{"Your weight the " + weight.date +' was '}}</span>{{weight.weight +' kg'}}</h3>
     </v-main>
   </v-app>
 </template>
 
 <script>
 import Navbar from '.././components/Navbar';
-
+import {mapState} from 'vuex';
 export default {
   name: 'Home',
-  computed: {
-    weights(){
-      return this.$store.getters.getAllWeights;
-    }
-  },
   components: {
     Navbar
   },
-
-  data: () => ({
-    //
-  }),
+  computed: mapState(['allWeights']),
+  created () {
+    this.$store.dispatch('loadAllWeights', this.$store.getters.getAccessToken)
+  },
 };
 </script>
