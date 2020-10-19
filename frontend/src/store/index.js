@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        isTokenFetched: false,
         accessToken: null,
         refreshToken: null,
         allWeights: []
@@ -30,6 +31,9 @@ export default new Vuex.Store({
         },
         setAllWeights(state, payload){
             state.allWeights = payload;
+        },
+        setIsTokenFetched(state, payload){
+            state.isTokenFetched = payload;
         }
         
     },
@@ -49,12 +53,15 @@ export default new Vuex.Store({
             )
         },
         loadAllWeights({commit}, token){
-            WeightService.getAllWeights(token).then(response=>{
-                commit('setAllWeights', response);
-            })
-            .catch(err=>{
-                console.log(err);
-            })
+            if(!this.state.isTokenFetched){
+                WeightService.getAllWeights(token).then(response=>{
+                    commit('setIsTokenFetched', true);
+                    commit('setAllWeights', response);
+                })
+                .catch(err=>{
+                    console.log(err);
+                })
+            }
         }
     },
     modules:{},
