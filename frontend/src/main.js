@@ -5,7 +5,12 @@ import router from './router'
 import store from "./store/index"
 
 Vue.config.productionTip = false
-
+router.beforeEach((to, from, next) =>{
+  if(to.matched.some(record => record.meta.requiresLogin)){
+    if(!store.getters.isUserLoggedIn)next({name: 'Login'});
+    else next();
+  }else next();
+})
 new Vue({
   vuetify,
   router,

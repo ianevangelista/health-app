@@ -35,18 +35,11 @@
           v-model="group"
           active-class="deep-purple--text text--accent-4"
         >
-          <v-list-item to="/">
+          <v-list-item v-for="(item, index) in items" :key="index" @click="action(item.action)">
             <v-list-item-icon>
-              <v-icon>mdi-home</v-icon>
+              <v-icon>{{item.icon}}</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Home</v-list-item-title>
-          </v-list-item>
-
-          <v-list-item>
-            <v-list-item-icon>
-              <v-icon>mdi-account</v-icon>
-            </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
+            <v-list-item-title>{{item.title}}</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -60,7 +53,37 @@
     data: () => ({
       drawer: false,
       group: null,
+      items: [
+        {
+          title: 'Home',
+          icon: 'mdi-home',
+          action: 'Home'
+        },
+        {
+          title: 'Account',
+          icon: 'mdi-account',
+          action: null
+        },
+        {
+          title: 'Log out',
+          icon: 'mdi-logout',
+          action: 'Logout'
+        }
+      ]
     }),
+    methods: {
+      action(action){
+        if(action == 'Home')this.$router.push({name: 'Home'});
+        else if(action=='Logout'){
+          console.log('inne');
+          this.$store.dispatch('logout').then(()=>{
+          this.$router.push({name: 'Login'});
+          });
+        }
+      }
+
+    }
+
   }
 </script>
 

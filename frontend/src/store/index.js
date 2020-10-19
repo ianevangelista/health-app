@@ -21,7 +21,7 @@ export default new Vuex.Store({
         setCurrentWeight(state, payload){
             console.log("setter ny vekt");
             state.currentWeight = payload;
-            console.log("satt ny vekt");
+            console.log(state.currentWeight);
 
             state.allWeights.push(payload);
             console.log("pusha ny vekt");
@@ -34,16 +34,20 @@ export default new Vuex.Store({
         },
         setIsTokenFetched(state, payload){
             state.isTokenFetched = payload;
+        },
+        removeToken(state){
+            state.accessToken = null;
+            state.refreshToken = null;
         }
         
     },
     actions: {
         //async
-        login(context, credentials){
+        login({commit}, credentials){
             return new Promise((resolve, reject)=>
                 LoginService.login(credentials)
                 .then(response=>{
-                    context.commit('updateStorage', {access: response.access, refresh: response.refresh})
+                    commit('updateStorage', {access: response.access, refresh: response.refresh})
                     resolve();
                 })
                 .catch(err=>{
@@ -51,6 +55,9 @@ export default new Vuex.Store({
                     console.log(err);
                 })    
             )
+        },
+        logout(context){
+            if(context.getters.isUserLoggedIn) context.commit('removeToken');
         },
         loadAllWeights({commit}, token){
             if(!this.state.isTokenFetched){
@@ -63,11 +70,13 @@ export default new Vuex.Store({
                 })
             }
         }
+        
     },
     modules:{},
     getters:{
         getCurrentWeight: state => state.allWeights,
         getAllWeights: state => state.allWeights,
         getAccessToken: state => state.accessToken,
+        isUserLoggedIn: state => state.accessToken != null
     },
 })

@@ -11,19 +11,26 @@ export default new Router({
     base: process.env.BASE_URL,
     routes: [
         {
+            path: '/login',
+            name: 'Login',
+            component: Login,
+        },
+        {
             path: '/',
             name: 'Home',
-            component: Home
+            component: Home,
+            meta: {
+                requiresLogin: true
+            }
         },
         {
             path: '/addWeight',
             name: 'Add weight',
-            component: AddWeight
+            component: AddWeight,
+            meta: {
+                requiresLogin: true
+            }
         },
-        {
-            path: '/login',
-            name: 'Login',
-            component: Login
-        }
+        
     ]
 })
