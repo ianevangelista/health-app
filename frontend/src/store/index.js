@@ -19,12 +19,9 @@ export default new Vuex.Store({
             state.refreshToken = refresh
         },
         setCurrentWeight(state, payload){
-            console.log("setter ny vekt");
             state.currentWeight = payload;
             console.log(state.currentWeight);
-
             state.allWeights.push(payload);
-            console.log("pusha ny vekt");
             console.log(state.allWeights);
 
 
@@ -51,8 +48,7 @@ export default new Vuex.Store({
                     resolve();
                 })
                 .catch(err=>{
-                    reject()
-                    console.log(err);
+                    reject(err);
                 })    
             )
         },
