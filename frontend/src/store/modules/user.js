@@ -1,6 +1,7 @@
 import LoginService from '../../service/LoginService'
 
 export default {
+    namespaced: true,
     state: {
         isTokenFetched: false,
         accessToken: null,

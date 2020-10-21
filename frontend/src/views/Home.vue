@@ -19,9 +19,15 @@ export default {
   components: {
     Navbar
   },
-  computed: mapState(['allWeights']),
+  computed: {
+    ...mapState('user', 
+    {
+      allWeights: state => state.allWeights
+    }
+    )
+  },
   created () {
-    this.$store.dispatch('loadAllWeights')
+    this.$store.dispatch('weight/loadAllWeights', {root:true});
   },
 };
 </script>

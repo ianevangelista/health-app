@@ -69,10 +69,10 @@
         this.incorrectAuth = false
       },
       login(){
-          this.$store.dispatch('login',{
+          this.$store.dispatch('user/login',{
               username: this.username,
               password: this.password
-          })
+          }, )
           .then(()=>{
               this.$router.push({name: "Home"})
           })
