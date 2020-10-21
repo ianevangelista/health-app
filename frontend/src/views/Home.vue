@@ -20,11 +20,7 @@ export default {
     Navbar
   },
   computed: {
-    ...mapState('user', 
-    {
-      allWeights: state => state.allWeights
-    }
-    )
+    ...mapState('weight',['allWeights'])
   },
   created () {
     this.$store.dispatch('weight/loadAllWeights', {root:true});

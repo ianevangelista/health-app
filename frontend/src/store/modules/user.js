@@ -3,7 +3,7 @@ import LoginService from '../../service/LoginService'
 export default {
     namespaced: true,
     state: {
-        isTokenFetched: false,
+        isAuthenticated: false,
         accessToken: null,
         refreshToken: null,
     },
@@ -12,8 +12,8 @@ export default {
             state.accessToken = access
             state.refreshToken = refresh
         },
-        setIsTokenFetched(state, payload){
-            state.isTokenFetched = payload;
+        setIsAuthenticated(state, payload){
+            state.isAuthenticated = payload;
         },
         removeToken(state){
             state.accessToken = null;
@@ -27,6 +27,7 @@ export default {
                 LoginService.login(credentials)
                 .then(response=>{
                     commit('updateStorage', {access: response.access, refresh: response.refresh})
+                    commit('setIsAuthenticated', true);
                     resolve();
                 })
                 .catch(err=>{
@@ -35,11 +36,14 @@ export default {
             )
         },
         logout(context){
-            if(context.getters.isUserLoggedIn) context.commit('removeToken');
+            if(!context.getters.isUserLoggedIn) {
+                context.commit('removeToken');
+                context.commit('setIsAuthenticated', false);
+            }
         }
     },
     getters:{
         getAccessToken: state => state.accessToken,
-        isUserLoggedIn: state => state.accessToken != null
+        isAuthenticated: state => (state.accessToken != null)
     }
 }

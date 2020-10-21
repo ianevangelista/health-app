@@ -3,7 +3,7 @@ import WeightService from '../../service/WeightService'
 export default {
     namespaced: true,
     state: {
-        allWeights: []
+        allWeights: 'hei'
     },
     mutations: {    
         setCurrentWeight(state, payload){
@@ -12,16 +12,13 @@ export default {
             console.log(state.allWeights);
         },
         setAllWeights(state, payload){
-            state.allWeights = payload;
-            console.log(state.allWeights + "allle satt");
+            state.allWeights = payload;            
         }
     },
     actions: {
         loadAllWeights({commit, rootState}){
             if(!this.state.isTokenFetched){
                 WeightService.getAllWeights(rootState.user.accessToken).then(response=>{
-                    console.log(response);
-                    commit('user/setIsTokenFetched', true, { root: true });
                     commit('setAllWeights', response);
                 })
                 .catch(err=>{

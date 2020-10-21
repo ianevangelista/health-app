@@ -55,11 +55,11 @@ import Navbar from "../components/Navbar"
       }),
       methods: {
         saveWeight() {
-          return this.$store.dispatch('addWeight', {weight: this.currentWeight.weight, date: this.picker})
+          return this.$store.dispatch('weight/addWeight', {weight: this.currentWeight.weight, date: this.picker}, {root:true})
         },
       },
       mounted(){
-        this.currentWeight = this.$store.getters.getAllWeights[this.$store.getters.getAllWeights.length-1];
+        this.currentWeight = this.$store.getters['weight/getAllWeights'][this.$store.getters['weight/getAllWeights'].length-1];
       }
   }
 </script>
