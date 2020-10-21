@@ -55,7 +55,7 @@ import Navbar from "../components/Navbar"
       }),
       methods: {
         saveWeight() {
-          return this.$store.commit('setCurrentWeight', {weight: this.currentWeight.weight, date: this.picker, id: (this.$store.getters.getAllWeights).length})
+          return this.$store.dispatch('addWeight', {weight: this.currentWeight.weight, date: this.picker})
         },
       },
       mounted(){

@@ -20,11 +20,9 @@ export default new Vuex.Store({
         },
         setCurrentWeight(state, payload){
             state.currentWeight = payload;
-            console.log(state.currentWeight);
+            console.log(state.allWeights);
             state.allWeights.push(payload);
             console.log(state.allWeights);
-
-
         },
         setAllWeights(state, payload){
             state.allWeights = payload;
@@ -55,9 +53,9 @@ export default new Vuex.Store({
         logout(context){
             if(context.getters.isUserLoggedIn) context.commit('removeToken');
         },
-        loadAllWeights({commit}, token){
+        loadAllWeights({commit}){
             if(!this.state.isTokenFetched){
-                WeightService.getAllWeights(token).then(response=>{
+                WeightService.getAllWeights(this.state.accessToken).then(response=>{
                     commit('setIsTokenFetched', true);
                     commit('setAllWeights', response);
                 })
@@ -65,6 +63,12 @@ export default new Vuex.Store({
                     console.log(err);
                 })
             }
+        },
+        addWeight({commit}, data){
+            WeightService.addWeight(this.state.accessToken, data).then(response=>{
+                commit('setCurrentWeight', response)
+            })
+            .catch(err=>console.log(err))
         }
         
     },

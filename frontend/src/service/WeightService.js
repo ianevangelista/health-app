@@ -14,6 +14,20 @@ class WeightService {
             console.log(err);
         });
     }
+
+    addWeight(token, data){
+        console.log(data);
+        return axios
+        .post(baseURL + '/weights/', data, {
+            headers: {
+                authorization: 'Bearer ' + token,
+                accept: 'application/json',
+
+            }
+        })
+        .then(response=>response.data)
+        .catch(err=>console.log(err))
+    }
 }
 
 export default new WeightService();

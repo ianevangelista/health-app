@@ -75,7 +75,6 @@
       action(action){
         if(action == 'Home')this.$router.push({name: 'Home'});
         else if(action=='Logout'){
-          console.log('inne');
           this.$store.dispatch('logout').then(()=>{
           this.$router.push({name: 'Login'});
           });
