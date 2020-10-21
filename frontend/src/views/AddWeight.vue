@@ -65,5 +65,5 @@ import Navbar from "../components/Navbar"
 </script>
 
 <style lang="scss" scoped>
-
+ 
 </style>
