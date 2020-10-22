@@ -22,14 +22,13 @@
             </v-icon>
             Save
           </v-btn>
-
         </v-col>
         <v-col>
           <p class="overline text-center">
             Select a date: 
           </p>
           <div class="text-center">
-            <v-date-picker v-model="picker"/>
+            <v-date-picker v-model="picker" :max="maxDate" />
           </div>
         </v-col>
       </v-row>
@@ -52,6 +51,7 @@ import Navbar from "../components/Navbar"
         weights: Array(50).fill().map((element, index) =>  (50+index).toFixed(1)),
         picker: new Date().toISOString().substr(0, 10),
         currentWeight: {},
+        maxDate: new Date().toISOString().substr(0, 10)
       }),
       methods: {
         saveWeight() {

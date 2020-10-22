@@ -4,6 +4,11 @@ import vuetify from './plugins/vuetify'
 import router from './router'
 import store from "./store/index"
 
+import Chartkick from 'vue-chartkick'
+import Chart from 'chart.js'
+
+Vue.use(Chartkick.use(Chart))
+
 Vue.config.productionTip = false
 router.beforeEach((to, from, next) =>{
   if(to.matched.some(record => record.meta.requiresLogin)){

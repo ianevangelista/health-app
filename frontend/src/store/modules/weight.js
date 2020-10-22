@@ -7,9 +7,7 @@ export default {
     },
     mutations: {    
         setCurrentWeight(state, payload){
-            console.log(state.allWeights);
             state.allWeights.push(payload);
-            console.log(state.allWeights);
         },
         setAllWeights(state, payload){
             state.allWeights = payload;            
@@ -37,5 +35,6 @@ export default {
     getters:{
         getCurrentWeight: state => state.allWeights,
         getAllWeights: state => state.allWeights,
+
     },
 }

@@ -2,51 +2,47 @@
   <v-app>
     <v-main>
       <Navbar/>
-      <h1>All weights:</h1>
-      <h3 v-for="(weight, index) in allWeights" v-bind:key="index">
-        <span>{{"Your weight the " + weight.date +' was '}}</span>
-        {{weight.weight +' kg'}}
-        </h3>
-        <weightChart width="500" type="bar" :options="chartOptions" :series="test"/>
+      <div class="chart">
+        <line-chart :min="50" :max="100" xtitle="Date" ytitle="Weight" prefix="Kg: " :download="{background: '#fff'}"
+          :data="formatData "/>
+      </div>
     </v-main>
   </v-app>
 </template>
 
 <script>
-import Vue from 'vue';
 import Navbar from '.././components/Navbar';
 import {mapGetters} from 'vuex';
-import VueApexCharts from 'vue-apexcharts';
-Vue.use(VueApexCharts);
 
-Vue.component('weightChart', VueApexCharts)
 export default {
   name: 'Home',
   components: {
     Navbar
   },
-  data() {
-    return{
-        chartOptions: {
-          chart: {
-            id: 'vuechart-example'
-          },
-          xaxis: {
-            categories: [],
-          }
-        },
-        series: [{
-          name: 'Your weight',
-          data: []
-        }]
-      }
-    },
+  data: () => ({
+        formattedData: {},
+  }),
   computed: {
-    ...mapGetters({allWeights: 'weight/getAllWeights'})
-  },
+    ...mapGetters({allWeights: 'weight/getAllWeights'}),
 
+    formatData: function(){
+      this.allWeights.map(weight=>{
+        this.formattedData[weight.date] = weight.weight
+    })
+    return this.formattedData
+    }
+  },
   created () {
     this.$store.dispatch('weight/loadAllWeights', {root:true});
   }
 };
 </script>
+
+<style>
+.chart{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+}
+</style>
